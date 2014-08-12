@@ -24,7 +24,7 @@ class PushbulletTray(QSystemTrayIcon):
 
     @pyqtSlot(dict)
     def on_link(self, lnk):
-        self.showMessage(lnk['title'], lnk['url'] + lnk['body'])
+        self.showMessage(lnk['title'], lnk['url'])
 
     @pyqtSlot(dict)
     def on_note(self, note):

@@ -12,12 +12,14 @@ logging.basicConfig(level=logging.DEBUG)
 
 def main():
     app = QApplication(sys.argv)
-    app.setQuitOnLastWindowClosed(False)
+    #app.setQuitOnLastWindowClosed(False)
     main_win = MainWindow()
 
     tray = PushbulletTray(main_win)
     main_win.connect_systray(tray)
     tray.show()
+
+    main_win.show()
 
     sys.exit(app.exec_())
 
