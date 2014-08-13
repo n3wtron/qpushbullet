@@ -18,6 +18,9 @@ setup(
         "Topic :: Utilities"
     ],
     install_requires=[
-        'pushbullet.py=0.5.0', 'PyQt4'
+        'pushbullet.py=0.5.0'
+    ],
+     scripts=[
+        'scripts/qpushbullet'
     ]
 )
