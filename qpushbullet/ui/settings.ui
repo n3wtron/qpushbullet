@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>QPushDialog Settings</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../../qpushbullet.resources.qrc">
+    <normaloff>:/icons/logo32</normaloff>:/icons/logo32</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_3">
    <item row="0" column="0" colspan="2">
@@ -77,6 +81,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../qpushbullet.resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

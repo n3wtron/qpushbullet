@@ -1,10 +1,12 @@
 import os
 import time
 
+from qpushbullet.tray import PushbulletTray
+
+
 __author__ = 'Igor Maculan <n3wtron@gmail.com>'
 from PyQt4.QtCore import QThread, pyqtSignal, pyqtSlot, Qt
-from PyQt4.QtGui import QMainWindow, QApplication, QListWidgetItem, QFileDialog
-
+from PyQt4.QtGui import QMainWindow, QListWidgetItem, QFileDialog, QIcon, QMessageBox
 from pushbullet import Listener, PushBullet
 from qpushbullet import config
 from qpushbullet.settings import SettingsDlg
@@ -12,17 +14,30 @@ from ui.mainwindow import Ui_MainWindow
 
 
 class MainWindow(QMainWindow):
-    def __init__(self):
+    connected = pyqtSignal(bool)
+
+    def __init__(self, app):
         QMainWindow.__init__(self)
+        self.app = app
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self._exit = False
+        self.ui.action_Exit.triggered.connect(self.exit)
+        self.ui.actionAbout_Qt.triggered.connect(app.aboutQt)
+        self.setWindowIcon(QIcon(':/icons/logo32'))
         self.listener = None
         self.tray = None
         self.pusher = None
-        self.connect_pushbullet()
+        self._connected = False
+
         self.settings_dlg = SettingsDlg(self)
         self.settings_dlg.saved.connect(self.reconnect)
+
+        self.tray = PushbulletTray(self)
         self.connect_actions()
+        self.connect_pushbullet()
+
+        self.tray.show()
 
     def connect_actions(self):
         self.ui.action_Settings.triggered.connect(self.settings_dlg.show)
@@ -80,65 +95,94 @@ class MainWindow(QMainWindow):
             self.pusher = PushBullet(str(config.value('key').toString()))
             self.listener = QPushBulletListener(self, self.pusher, proxy_host, proxy_port)
             self.listener.start()
+            self.connect_systray()
             self.connect_pushes_actions()
             self.refresh_devices()
+            self.connected.emit(True)
+            self._connected = True
+        else:
+            self.connected.emit(False)
 
     def disconnect_pushbullet(self):
-        if self.listener is not None:
-            self.listener.quit()
-            if self.listener.isRunning():
-                self.listener.terminate()
+        self.connected.emit(False)
+        if False and self.listener is not None:
+            print "systray"
             self.disconnect_systray()
-            self.listener = None
+            print "listener quit"
+            self.listener.quit()
+            print "listener terminate"
+            self.listener.terminate()
+            print "disconnect_pushes"
             self.disconnect_pushes_actions()
+            self.listener = None
+
 
     @pyqtSlot()
     def push_note(self):
-        if self.pusher and self.ui.devicesList.currentItem():
-            device = self.ui.devicesList.currentItem().data(Qt.UserRole).toPyObject()
+        if self.pusher and len(self.ui.devicesList.selectedItems()) == 1:
+            device = self.ui.devicesList.selectedItems()[0].data(Qt.UserRole).toPyObject()
             device.push_note(str(self.ui.noteTitleEdt.text()), str(self.ui.noteTextEdt.toPlainText()))
+        else:
+            QMessageBox.warning(self, "Cannot push", "There is no target device selected")
 
     @pyqtSlot()
     def push_link(self):
-        if self.pusher and self.ui.devicesList.currentItem():
-            device = self.ui.devicesList.currentItem().data(Qt.UserRole).toPyObject()
+        if self.pusher and len(self.ui.devicesList.selectedItems()) == 1:
+            device = self.ui.devicesList.selectedItems()[0].data(Qt.UserRole).toPyObject()
             device.push_link(str(self.ui.linkTitleEdt.text()), str(self.ui.linkUrlEdt.text()))
+        else:
+            QMessageBox.warning(self, "Cannot push", "There is no target device selected")
 
     @pyqtSlot()
     def push_list(self):
-        if self.pusher and self.ui.devicesList.currentItem():
-            device = self.ui.devicesList.currentItem().data(Qt.UserRole).toPyObject()
+        if self.pusher and len(self.ui.devicesList.selectedItems()) == 1:
+            device = self.ui.devicesList.selectedItems()[0].data(Qt.UserRole).toPyObject()
             widget_items = [self.ui.itemsList.item(n) for n in range(0, self.ui.itemsList.count())]
             items = map(lambda x: str(x.text()), widget_items)
             device.push_list(str(self.ui.listTitleEdt.text()), items)
+        else:
+            QMessageBox.warning(self, "Cannot push", "There is no target device selected")
 
     @pyqtSlot()
     def push_file(self):
-        if self.pusher and self.ui.devicesList.currentItem():
-            device = self.ui.devicesList.currentItem().data(Qt.UserRole).toPyObject()
+        if self.pusher and len(self.ui.devicesList.selectedItems()) == 1:
+            device = self.ui.devicesList.selectedItems()[0].data(Qt.UserRole).toPyObject()
             fname = str(self.ui.filePathEdt.text())
             with open(fname, "rb") as f_to_send:
                 success, file_data = self.pusher.upload_file(f_to_send, os.path.basename(fname))
                 if success:
                     device.push_file(**file_data)
+        else:
+            QMessageBox.warning(self, "Cannot push", "There is no target device selected")
+
+    @pyqtSlot()
+    def push_address(self):
+        if self.pusher and len(self.ui.devicesList.selectedItems()) == 1:
+            device = self.ui.devicesList.selectedItems()[0].data(Qt.UserRole).toPyObject()
+            device.push_address(str(self.ui.addressTitleEdt.text()), str(self.ui.addressTxt.toPlainText()))
+        else:
+            QMessageBox.warning(self, "Cannot push", "There is no target device selected")
 
     def connect_pushes_actions(self):
         self.ui.sendNoteBtn.clicked.connect(self.push_note)
         self.ui.sendLinkBtn.clicked.connect(self.push_link)
         self.ui.sendFileBtn.clicked.connect(self.push_file)
         self.ui.sendListBtn.clicked.connect(self.push_list)
+        self.ui.sendAddressBtn.clicked.connect(self.push_address)
 
     def disconnect_pushes_actions(self):
         self.ui.sendNoteBtn.clicked.disconnect(self.push_note)
         self.ui.sendLinkBtn.clicked.disconnect(self.push_link)
         self.ui.sendFileBtn.clicked.disconnect(self.push_file)
         self.ui.sendListBtn.clicked.disconnect(self.push_list)
+        self.ui.sendAddressBtn.clicked.disconnect(self.push_address)
 
-    def connect_systray(self, tray):
-        self.tray = tray
+    def connect_systray(self, ):
         if self.tray is not None:
+            self.connected.connect(self.tray.connected)
             self.listener.on_link.connect(self.tray.on_link)
             self.listener.on_note.connect(self.tray.on_note)
+            self.connected.emit(self._connected)
 
     def disconnect_systray(self):
         if self.tray is not None:
@@ -153,12 +197,15 @@ class MainWindow(QMainWindow):
 
     @pyqtSlot()
     def exit(self):
-        self.disconnect_pushbullet()
-        QApplication.quit()
+        self._exit = True
+        self.close()
 
     def closeEvent(self, event):
-        self.listener.quit()
-        QMainWindow.closeEvent(self, event)
+        if not self._exit:
+            self.hide()
+            event.ignore()
+        else:
+            QMainWindow.closeEvent(self, event)
 
 
 class QPushBulletListener(QThread):
@@ -200,5 +247,8 @@ class QPushBulletListener(QThread):
         self.listener.run_forever()
 
     def quit(self):
-        self.listener.close()
+        try:
+            self.listener.close()
+        except Exception:
+            pass
         QThread.quit(self)

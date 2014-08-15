@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/settings.ui'
 #
-# Created: Tue Jul 22 09:27:00 2014
+# Created: Fri Aug 15 08:12:52 2014
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -27,6 +27,9 @@ class Ui_Settings(object):
     def setupUi(self, Settings):
         Settings.setObjectName(_fromUtf8("Settings"))
         Settings.resize(400, 194)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/logo32")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        Settings.setWindowIcon(icon)
         self.gridLayout_3 = QtGui.QGridLayout(Settings)
         self.gridLayout_3.setObjectName(_fromUtf8("gridLayout_3"))
         self.groupBox = QtGui.QGroupBox(Settings)
@@ -60,10 +63,11 @@ class Ui_Settings(object):
         QtCore.QMetaObject.connectSlotsByName(Settings)
 
     def retranslateUi(self, Settings):
-        Settings.setWindowTitle(_translate("Settings", "Dialog", None))
+        Settings.setWindowTitle(_translate("Settings", "QPushDialog Settings", None))
         self.groupBox.setTitle(_translate("Settings", "Pushbullet Api Key", None))
         self.groupBox_2.setTitle(_translate("Settings", "HTTP Proxy", None))
         self.proxy_host_edt.setPlaceholderText(_translate("Settings", "Hostname", None))
         self.proxy_port_edt.setInputMask(_translate("Settings", "Dddd", None))
         self.proxy_port_edt.setPlaceholderText(_translate("Settings", "Port", None))
 
+import qpushbullet.resources_rc

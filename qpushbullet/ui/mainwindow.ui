@@ -6,27 +6,48 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>549</width>
-    <height>371</height>
+    <width>693</width>
+    <height>381</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>QPushBullet</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../../qpushbullet.resources.qrc">
+    <normaloff>:/icons/logo32</normaloff>:/icons/logo32</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_2">
     <item row="0" column="0">
-     <widget class="QTabWidget" name="tabWidget">
+     <widget class="QTabWidget" name="addressTab">
       <property name="minimumSize">
        <size>
         <width>400</width>
         <height>0</height>
        </size>
       </property>
+      <property name="tabPosition">
+       <enum>QTabWidget::South</enum>
+      </property>
+      <property name="tabShape">
+       <enum>QTabWidget::Rounded</enum>
+      </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>4</number>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>32</width>
+        <height>32</height>
+       </size>
       </property>
       <widget class="QWidget" name="noteTab">
+       <attribute name="icon">
+        <iconset resource="../../qpushbullet.resources.qrc">
+         <normaloff>:/icons/note</normaloff>
+         <activeon>:/icons/note_on</activeon>:/icons/note</iconset>
+       </attribute>
        <attribute name="title">
         <string>Note</string>
        </attribute>
@@ -66,7 +87,14 @@
          </widget>
         </item>
         <item row="5" column="0" colspan="2">
-         <widget class="QTextEdit" name="noteTextEdt"/>
+         <widget class="QTextEdit" name="noteTextEdt">
+          <property name="tabChangesFocus">
+           <bool>true</bool>
+          </property>
+          <property name="acceptRichText">
+           <bool>false</bool>
+          </property>
+         </widget>
         </item>
         <item row="3" column="0" colspan="2">
          <widget class="QLineEdit" name="noteTitleEdt"/>
@@ -74,6 +102,11 @@
        </layout>
       </widget>
       <widget class="QWidget" name="LinkTab">
+       <attribute name="icon">
+        <iconset resource="../../qpushbullet.resources.qrc">
+         <normaloff>:/icons/link</normaloff>
+         <activeon>:/icons/link_on</activeon>:/icons/link</iconset>
+       </attribute>
        <attribute name="title">
         <string>Link</string>
        </attribute>
@@ -134,6 +167,11 @@
        </layout>
       </widget>
       <widget class="QWidget" name="fileTab">
+       <attribute name="icon">
+        <iconset resource="../../qpushbullet.resources.qrc">
+         <normaloff>:/icons/file</normaloff>
+         <activeon>:/icons/file_on</activeon>:/icons/file</iconset>
+       </attribute>
        <attribute name="title">
         <string>File</string>
        </attribute>
@@ -195,6 +233,11 @@
        </layout>
       </widget>
       <widget class="QWidget" name="listTab">
+       <attribute name="icon">
+        <iconset resource="../../qpushbullet.resources.qrc">
+         <normaloff>:/icons/list</normaloff>
+         <activeon>:/icons/list_on</activeon>:/icons/list</iconset>
+       </attribute>
        <attribute name="title">
         <string>List</string>
        </attribute>
@@ -228,7 +271,7 @@
           <property name="sizeHint" stdset="0">
            <size>
             <width>20</width>
-            <height>30</height>
+            <height>40</height>
            </size>
           </property>
          </spacer>
@@ -254,14 +297,11 @@
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>289</width>
+            <width>359</width>
             <height>20</height>
            </size>
           </property>
          </spacer>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLineEdit" name="listTitleEdt"/>
         </item>
         <item row="0" column="0">
          <widget class="QLabel" name="label_6">
@@ -277,6 +317,68 @@
           </property>
          </widget>
         </item>
+        <item row="1" column="0" colspan="3">
+         <widget class="QLineEdit" name="listTitleEdt"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab">
+       <attribute name="icon">
+        <iconset resource="../../qpushbullet.resources.qrc">
+         <normaloff>:/icons/address</normaloff>
+         <activeon>:/icons/address_on</activeon>:/icons/address</iconset>
+       </attribute>
+       <attribute name="title">
+        <string>Address</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_8">
+          <property name="text">
+           <string>Title</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_9">
+          <property name="text">
+           <string>Street Address</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <spacer name="horizontalSpacer_5">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>322</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="4" column="1">
+         <widget class="QPushButton" name="sendAddressBtn">
+          <property name="text">
+           <string>Push Address</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" colspan="2">
+         <widget class="QTextEdit" name="addressTxt">
+          <property name="tabChangesFocus">
+           <bool>true</bool>
+          </property>
+          <property name="acceptRichText">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" colspan="2">
+         <widget class="QLineEdit" name="addressTitleEdt"/>
+        </item>
        </layout>
       </widget>
      </widget>
@@ -288,7 +390,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>549</width>
+     <width>693</width>
      <height>22</height>
     </rect>
    </property>
@@ -304,6 +406,7 @@
      <string>&amp;Help</string>
     </property>
     <addaction name="action_About"/>
+    <addaction name="actionAbout_Qt"/>
    </widget>
    <widget class="QMenu" name="menu_Edit">
     <property name="title">
@@ -323,6 +426,10 @@
      <horstretch>0</horstretch>
      <verstretch>0</verstretch>
     </sizepolicy>
+   </property>
+   <property name="windowIcon">
+    <iconset>
+     <normaloff>:/icons/devices</normaloff>:/icons/devices</iconset>
    </property>
    <property name="features">
     <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
@@ -368,6 +475,7 @@
     <bool>false</bool>
    </attribute>
    <addaction name="action_Refresh"/>
+   <addaction name="action_Settings"/>
   </widget>
   <action name="action_About">
    <property name="text">
@@ -375,42 +483,65 @@
    </property>
   </action>
   <action name="action_Exit">
+   <property name="icon">
+    <iconset theme="application-exit">
+     <normaloff/>
+    </iconset>
+   </property>
    <property name="text">
     <string>&amp;Exit</string>
    </property>
   </action>
   <action name="action_Settings">
+   <property name="icon">
+    <iconset theme="preferences-system">
+     <normaloff/>
+    </iconset>
+   </property>
    <property name="text">
     <string>&amp;Settings</string>
    </property>
   </action>
   <action name="action_Refresh">
+   <property name="icon">
+    <iconset theme="view-refresh">
+     <normaloff/>
+    </iconset>
+   </property>
    <property name="text">
     <string>&amp;Refresh</string>
    </property>
   </action>
+  <action name="actionAbout_Qt">
+   <property name="text">
+    <string>About Qt</string>
+   </property>
+  </action>
  </widget>
  <tabstops>
-  <tabstop>tabWidget</tabstop>
+  <tabstop>noteTitleEdt</tabstop>
+  <tabstop>noteTextEdt</tabstop>
+  <tabstop>sendNoteBtn</tabstop>
+  <tabstop>linkTitleEdt</tabstop>
+  <tabstop>linkUrlEdt</tabstop>
+  <tabstop>sendLinkBtn</tabstop>
+  <tabstop>filePathEdt</tabstop>
+  <tabstop>browseFileBtn</tabstop>
+  <tabstop>sendFileBtn</tabstop>
+  <tabstop>listTitleEdt</tabstop>
+  <tabstop>addItemBtn</tabstop>
+  <tabstop>itemsList</tabstop>
+  <tabstop>sendListBtn</tabstop>
+  <tabstop>removeItemBtn</tabstop>
+  <tabstop>clearItemsBtn</tabstop>
+  <tabstop>addressTitleEdt</tabstop>
+  <tabstop>addressTxt</tabstop>
+  <tabstop>sendAddressBtn</tabstop>
   <tabstop>devicesList</tabstop>
+  <tabstop>addressTab</tabstop>
  </tabstops>
- <resources/>
- <connections>
-  <connection>
-   <sender>action_Exit</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <resources>
+  <include location="../../qpushbullet.resources.qrc"/>
+ </resources>
+ <connections/>
 </ui>

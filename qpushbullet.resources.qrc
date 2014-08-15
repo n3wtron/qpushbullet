@@ -1,0 +1,40 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file alias="address">icons/address-color.png</file>
+        <file alias="address_on">icons/address-rect.png</file>
+        <file>icons/address-sel.png</file>
+        <file>icons/address.png</file>
+        <file>icons/download-rect.png</file>
+        <file>icons/error-rect.png</file>
+        <file alias="file">icons/file-color.png</file>
+        <file alias="file_on">icons/file-rect.png</file>
+        <file>icons/file-sel.png</file>
+        <file>icons/file.png</file>
+        <file alias="logo16_disabled">icons/icon16-disabled.png</file>
+        <file>icons/icon16-download.png</file>
+        <file>icons/icon16-error.png</file>
+        <file>icons/icon16-none.png</file>
+        <file>icons/icon16-upload.png</file>
+        <file alias="logo16">icons/icon16.png</file>
+        <file alias="logo32">icons/icon32.png</file>
+        <file>icons/icon48.png</file>
+        <file>icons/icon64.png</file>
+        <file>icons/icon128.png</file>
+        <file alias="link">icons/link-color.png</file>
+        <file alias="link_on">icons/link-rect.png</file>
+        <file>icons/link-sel.png</file>
+        <file>icons/link.png</file>
+        <file alias="list">icons/list-color.png</file>
+        <file alias="list_on">icons/list-rect.png</file>
+        <file>icons/list-sel.png</file>
+        <file>icons/list.png</file>
+        <file>icons/message-sel.png</file>
+        <file>icons/message.png</file>
+        <file alias="note">icons/note-color.png</file>
+        <file alias="note_on">icons/note-rect.png</file>
+        <file>icons/note-sel.png</file>
+        <file>icons/note.png</file>
+        <file>icons/upload-rect.png</file>
+        <file alias="logo32_disabled">icons/icon32_disabled.png</file>
+    </qresource>
+</RCC>
